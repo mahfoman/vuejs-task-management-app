@@ -20,7 +20,7 @@
         <button class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600" > Add Task </button>
       </div>
 
-      <!-- Task Listing -->
+      <!-- Task List -->
       <div class="mt-6">
         <p class="text-center text-gray-500 border rounded p-4">
           No tasks available
