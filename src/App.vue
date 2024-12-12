@@ -33,7 +33,7 @@
               <input type="checkbox" v-model="task.completed" class="mr-2" />
               <span>{{ task.name }}</span>
             </div>
-            <button class="text-red-500 hover:text-red-700">Delete</button>
+            <button @click="deleteTask(task.id)" class="text-red-500 hover:text-red-700">Delete</button>
           </li>
         </ul>
       </div>
@@ -71,6 +71,13 @@ const taskClass = (task) =>
     task.completed
         ? 'bg-green-100 border-red-500'
         : 'bg-white border-gray-300';
+
+const deleteTask = (id) => {
+  const index = tasks.findIndex((task) => task.id === id);
+  if (index > -1) {
+    tasks.splice(index, 1);
+  }
+};
 
 </script>
 
