@@ -77,6 +77,10 @@ const toggleForm = () => {
 
 const addTask = () => {
   const name = newTaskName.value.trim();
+  if (name.length < 3) {
+    alert('Task name must be at least 3 characters long.');
+    return;
+  }
   tasks.push({ id: Date.now(), name, completed: false });
   newTaskName.value = '';
 };
