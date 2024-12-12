@@ -52,10 +52,10 @@
 
 <script setup>
 
-import { ref, reactive, computed } from 'vue';
+import { ref, reactive, onMounted } from 'vue';
 import TaskList from './components/TaskList.vue';
 
-const tasks = reactive([]);
+const tasks = reactive(JSON.parse(localStorage.getItem('tasks') || '[]'));
 const showForm = ref(false);
 const newTaskName = ref('');
 const showOnlyCompleted = ref(false);
@@ -71,6 +71,7 @@ const addTask = () => {
     return;
   }
   tasks.push({ id: Date.now(), name, completed: false });
+  saveTasks();
   newTaskName.value = '';
 };
 
@@ -78,8 +79,17 @@ const deleteTask = (id) => {
   const index = tasks.findIndex((task) => task.id === id);
   if (index > -1) {
     tasks.splice(index, 1);
+    saveTasks();
   }
 };
+
+const saveTasks = () => {
+  localStorage.setItem('tasks', JSON.stringify(tasks));
+};
+
+onMounted(() => {
+  saveTasks();
+});
 
 </script>
 
