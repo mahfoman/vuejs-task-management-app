@@ -17,22 +17,21 @@
 
       <!-- Add Task Form -->
       <div v-if="showForm" class="mt-4 text-center">
-        <input type="text" placeholder="Enter task name" class="border p-2 rounded w-full mb-2" />
-        <button class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600" > Add Task </button>
+        <input v-model="newTaskName" type="text" placeholder="Enter task name" class="border p-2 rounded w-full mb-2" />
+        <button @click="addTask" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600" > Add Task </button>
       </div>
 
       <!-- Task Listing -->
       <div class="mt-6">
         <h2 class="text-2xl font-bold text-gray-800 mb-3">All Tasks</h2>
-        <p class="text-center text-gray-500 border rounded p-4">
+        <p v-if="tasks.length === 0" class="text-center text-gray-500 border rounded p-4">
           No tasks available
         </p>
-
         <ul>
-          <li class="p-4 mb-2 border rounded flex justify-between items-center">
+          <li v-for="task in tasks" :key="task.id" class="p-4 mb-2 border rounded flex justify-between items-center">
             <div>
               <input type="checkbox" class="mr-2" />
-              <span>Task 1</span>
+              <span>{{ task.name }}</span>
             </div>
             <button class="text-red-500 hover:text-red-700">Delete</button>
           </li>
@@ -44,7 +43,7 @@
   <!-- Footer Section -->
   <footer class="bg-gray-600 text-white p-4 fixed bottom-0 left-0 right-0">
     <div class="max-w-4xl mx-auto text-center">
-      <p>&copy; 2024 Task Management System.</p>
+      <p>&copy; 2024 Task Manager APP</p>
     </div>
   </footer>
 
@@ -52,9 +51,17 @@
 
 <script setup>
 
-import { ref } from 'vue';
+import { ref, reactive } from 'vue';
 
+const tasks = reactive([]);
 const showForm = ref(false);
+const newTaskName = ref('');
+
+const addTask = () => {
+  const name = newTaskName.value.trim();
+  tasks.push({ id: Date.now(), name, completed: false });
+  newTaskName.value = '';
+};
 
 const toggleForm = () => {
   showForm.value = !showForm.value;
