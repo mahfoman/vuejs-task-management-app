@@ -24,11 +24,24 @@
       <!-- Task Listing -->
       <div class="mt-6">
         <h2 class="text-2xl font-bold text-gray-800 mb-3">All Tasks</h2>
-        <p v-if="tasks.length === 0" class="text-center text-gray-500 border rounded p-4">
+
+        <!-- Filter Completed Tasks -->
+        <div v-if="tasks.length > 0" class="my-5">
+          <label class="inline-flex items-center">
+            <input
+                type="checkbox"
+                v-model="showOnlyCompleted"
+                class="mr-2"
+            />
+            Show only completed tasks
+          </label>
+        </div>
+
+        <p v-if="filteredTasks.length === 0" class="text-center text-gray-500 border rounded p-4">
           No tasks available
         </p>
         <ul>
-          <li v-for="task in tasks" :key="task.id" :class="taskClass(task)" class="p-4 mb-2 border rounded flex justify-between items-center">
+          <li v-for="task in filteredTasks" :key="task.id" :class="taskClass(task)" class="p-4 mb-2 border rounded flex justify-between items-center">
             <div>
               <input type="checkbox" v-model="task.completed" class="mr-2" />
               <span>{{ task.name }}</span>
@@ -51,11 +64,12 @@
 
 <script setup>
 
-import { ref, reactive } from 'vue';
+import { ref, reactive, computed } from 'vue';
 
 const tasks = reactive([]);
 const showForm = ref(false);
 const newTaskName = ref('');
+const showOnlyCompleted = ref(false);
 
 const toggleForm = () => {
   showForm.value = !showForm.value;
@@ -78,6 +92,12 @@ const deleteTask = (id) => {
     tasks.splice(index, 1);
   }
 };
+
+const filteredTasks = computed(() => {
+  return showOnlyCompleted.value
+      ? tasks.filter((task) => task.completed)
+      : tasks;
+});
 
 </script>
 
