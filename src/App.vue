@@ -28,9 +28,9 @@
           No tasks available
         </p>
         <ul>
-          <li v-for="task in tasks" :key="task.id" class="p-4 mb-2 border rounded flex justify-between items-center">
+          <li v-for="task in tasks" :key="task.id" :class="taskClass(task)" class="p-4 mb-2 border rounded flex justify-between items-center">
             <div>
-              <input type="checkbox" class="mr-2" />
+              <input type="checkbox" v-model="task.completed" class="mr-2" />
               <span>{{ task.name }}</span>
             </div>
             <button class="text-red-500 hover:text-red-700">Delete</button>
@@ -57,15 +57,20 @@ const tasks = reactive([]);
 const showForm = ref(false);
 const newTaskName = ref('');
 
+const toggleForm = () => {
+  showForm.value = !showForm.value;
+};
+
 const addTask = () => {
   const name = newTaskName.value.trim();
   tasks.push({ id: Date.now(), name, completed: false });
   newTaskName.value = '';
 };
 
-const toggleForm = () => {
-  showForm.value = !showForm.value;
-};
+const taskClass = (task) =>
+    task.completed
+        ? 'bg-green-100 border-red-500'
+        : 'bg-white border-gray-300';
 
 </script>
 
