@@ -10,18 +10,20 @@
   <main class="flex-grow py-8">
     <div class="container mx-auto p-6 bg-white shadow-lg rounded-lg max-w-5xl">
       <div class="flex justify-between items-center mb-5">
-        <h2 class="text-2xl font-bold text-gray-800">All Tasks</h2>
-        <button class="bg-blue-500 text-white px-4 py-2 font-semibold text-sm rounded hover:bg-blue-600">Task Form</button>
+        <button @click="toggleForm" class="bg-blue-500 text-white px-4 py-2 font-semibold text-sm rounded hover:bg-blue-600">
+          {{ showForm ? 'Hide Task Form' : 'Show Task Form' }}
+        </button>
       </div>
 
       <!-- Add Task Form -->
-      <div class="mt-4">
+      <div v-if="showForm" class="mt-4 text-center">
         <input type="text" placeholder="Enter task name" class="border p-2 rounded w-full mb-2" />
         <button class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600" > Add Task </button>
       </div>
 
       <!-- Task Listing -->
       <div class="mt-6">
+        <h2 class="text-2xl font-bold text-gray-800 mb-3">All Tasks</h2>
         <p class="text-center text-gray-500 border rounded p-4">
           No tasks available
         </p>
@@ -47,6 +49,18 @@
   </footer>
 
 </template>
+
+<script setup>
+
+import { ref } from 'vue';
+
+const showForm = ref(false);
+
+const toggleForm = () => {
+  showForm.value = !showForm.value;
+};
+
+</script>
 
 <style scoped>
 
