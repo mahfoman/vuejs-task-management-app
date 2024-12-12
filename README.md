@@ -5,6 +5,12 @@ A simple Task Manager application built with Vue 3, TailwindCSS, and Vite. This 
 
 ---
 
+## Screenshots
+
+![vue3 vite tailwindcss](https://laravelcodesnippets.com/images/github/vue3-vite-tailwind-task-manager-app.png)
+
+---
+
 ## Features
 
 ### 1. Adding Tasks
